@@ -1,0 +1,155 @@
+body{
+    -webkit-text-stroke-width: 2px;
+    
+    -webkit-text-stroke-color: rgb(255, 255, 255);
+    color: #ffffff00;
+   
+    text-align: center;
+    text-shadow: 2px 2px 4px #4f2a06;
+    background-color: #ffd3a3;
+
+    animation: fadeIn 1.5s ease-out;
+}
+html {
+    scroll-behavior: smooth;
+}
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+}
+.menu{
+    text-align:left;
+    font-weight:bold;
+}
+.menu h2{
+    font-size: 1.5em;
+    font-weight: auto;
+    
+    
+}
+.menu-item{
+    background-color: #906427;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    
+}
+.menu-item a{
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: bold;
+}
+.menu-item a:hover{
+    color: rgb(127, 47, 1);
+     /* text-decoration: underline;
+     text-decoration-color: rgb(255, 255, 255);
+    
+     text-decoration-style: dotted; */
+    -webkit-text-stroke-color: rgb(127, 47, 1);
+   
+    transform: rotate(5deg);
+ border-bottom: 5px solid #fffcfc;    
+  padding-bottom: 2px; /* 文字と線の隙間 */
+  display: inline-block; /* borderを効かせるため */
+
+   
+}
+.homebutton{
+    background-color: #ffb347;
+    border: none;
+    color: white;
+    padding: 30px 64px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 32px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 12px;
+}
+.topbutton{
+    position: fixed;
+    bottom:20px;
+    right: 20px;;
+
+    background-color: #ffb347;
+    border: none;
+    color: white;
+    padding: 10px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 15px;
+    margin: 2px 2px;
+    cursor: pointer;
+    border-radius: 300px;
+}
+.topbutton:hover{
+    background-color: #ff7f50;
+    
+}
+.homebutton:hover{
+    background-color: #ff7f50;
+    
+}
+.resizetitle h1{
+    font-size: 3em;
+    font-weight: bold;
+     
+}
+.title{
+   
+    font-weight: bold;
+    margin-top: 5%;
+    width: 50%;
+    background-color: #906427;
+    padding: 50px;
+    border-radius: 40px;
+     display: inline-block;       /* しっかり折り返させる */
+  white-space: normal;     /* 自動折り返しを許可 */
+  
+}
+.resizeimg img{
+animation: fadeIn 1.0s ease-out;
+}
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(100px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+}
+.event-table {
+    width: 80%;
+    margin: 0 auto;
+    border-collapse: collapse;
+   font-size: 20px;
+   background-color: #906427;
+
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap:20px 30px;
+    
+    
+    justify-content: center;
+    align-items: center;
+    
+}
+
