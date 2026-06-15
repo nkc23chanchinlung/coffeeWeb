@@ -24,11 +24,24 @@ html {
         transform: translateY(0);
       }
 }
+h1{
+color:black;
+ -webkit-text-stroke-width: 1px;
+    
+    -webkit-text-stroke-color: rgb(158, 143, 57);
+}
+h2{
+background-color: #4f2a06;
+outline: 5px solid #ffffff;
+border-radius: 5px;
+padding: auto;
+
+}
 .menu{
     text-align:left;
     font-weight:bold;
 }
-.menu h2{
+.menu h1{
     font-size: 1.5em;
     font-weight: auto;
     
@@ -36,6 +49,7 @@ html {
 }
 .menu-item{
     background-color: #906427;
+       outline: 5px solid #4f2a06;
     border-radius: 10px;
     padding: 10px;
     margin-bottom: 10px;
@@ -101,7 +115,7 @@ html {
     
 }
 .resizetitle h1{
-    font-size: 3em;
+    font-size: 5em;
     font-weight: bold;
      
 }
@@ -111,7 +125,8 @@ html {
     margin-top: 5%;
     width: 50%;
     background-color: #906427;
-    padding: 50px;
+       outline: 5px solid #4f2a06;
+    padding: 20px;
     border-radius: 40px;
      display: inline-block;       /* しっかり折り返させる */
   white-space: normal;     /* 自動折り返しを許可 */
@@ -133,10 +148,11 @@ animation: fadeIn 1.0s ease-out;
 }
 .event-table {
     width: 80%;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     border-collapse: collapse;
    font-size: 20px;
    background-color: #906427;
+   outline: 5px solid #4f2a06;
 
     border-radius: 10px;
     overflow: hidden;
@@ -145,11 +161,63 @@ animation: fadeIn 1.0s ease-out;
 .container {
     display: flex;
     justify-content: center;
-    gap:20px 30px;
-    
-    
-    justify-content: center;
+    gap:20px 50px;
+
     align-items: center;
     
 }
+
+.item-text{
+    text-align: center;
+    font-size: 20px;
+    
+    border-bottom: 3px solid #ffffff;
+
+    
+    
+
+}
+.item-img{
+    width: 200px;
+    background-color: #4f2a06;
+    outline: 5px solid #ffffff;
+    border-radius: 50%;
+    padding: 50px;
+     
+}
+.item-img:hover{
+background-color: #ffb347;
+}
+.item-table{
+    gap: 30px 30px;
+    table-layout: fixed;
+    display:inline-block;
+    white-space:normal;
+   
+}
+.item-table h2{
+    background-color: #4f2a06;
+    
+    border-radius: 50%;
+    font-size:40px;
+    text-align: center;
+    width: 30%;
+    padding: 70px;
+}
+.new-item h1{
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-decoration-thickness: 5px;
+    text-decoration-color: #4f2a06;
+}
+.new-img{
+position: absolute;
+width: 100px;
+
+}
+table{
+width: 100%; /* または特定のpx値 */
+  table-layout: auto; /* 文字数に応じて自動調整 */}
+
+
 
