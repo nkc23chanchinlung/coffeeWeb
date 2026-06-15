@@ -1,0 +1,959 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Cookie Atelier</title>
+  <style>
+    :root {
+      --ink: #211a16;
+      --muted: #6b5d54;
+      --paper: #fffaf0;
+      --panel: #ffffff;
+      --line: #ded3c3;
+      --accent: #d94f2b;
+      --accent-dark: #a3341e;
+      --mint: #4e9b76;
+      --blue: #4b75b8;
+      --gold: #e3a92f;
+      --shadow: 0 18px 45px rgba(67, 45, 25, .16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background:
+        radial-gradient(circle at 10% 15%, rgba(227, 169, 47, .14), transparent 30%),
+        radial-gradient(circle at 92% 12%, rgba(75, 117, 184, .14), transparent 27%),
+        linear-gradient(135deg, #fff7e5 0%, #f5f0e7 47%, #eef5f1 100%);
+      overflow-x: hidden;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .app {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+
+    .mark {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: linear-gradient(145deg, var(--accent), var(--gold));
+      box-shadow: var(--shadow);
+      flex: 0 0 auto;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.35rem);
+      letter-spacing: 0;
+      line-height: 1.05;
+    }
+
+    .brand p {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: .95rem;
+    }
+
+    .top-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .icon-button,
+    .small-button {
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .82);
+      color: var(--ink);
+      min-height: 42px;
+      border-radius: 8px;
+      padding: 0 13px;
+      cursor: pointer;
+      box-shadow: 0 8px 18px rgba(44, 34, 24, .08);
+      transition: transform .16s ease, border-color .16s ease, background .16s ease;
+    }
+
+    .icon-button {
+      width: 44px;
+      padding: 0;
+      display: grid;
+      place-items: center;
+    }
+
+    .icon-button:hover,
+    .small-button:hover {
+      transform: translateY(-1px);
+      border-color: #c5b5a1;
+      background: white;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(300px, 1fr) minmax(320px, 390px);
+      gap: 22px;
+      align-items: start;
+    }
+
+    .stage,
+    .shop,
+    .stats,
+    .achievements {
+      background: rgba(255, 255, 255, .84);
+      border: 1px solid rgba(222, 211, 195, .9);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .stage {
+      min-height: 620px;
+      padding: clamp(18px, 4vw, 34px);
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      padding: 13px 14px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 250, 240, .82);
+      min-width: 0;
+    }
+
+    .metric span {
+      display: block;
+      color: var(--muted);
+      font-size: .8rem;
+      margin-bottom: 4px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: clamp(1rem, 2.2vw, 1.45rem);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .cookie-zone {
+      display: grid;
+      place-items: center;
+      min-height: 300px;
+      position: relative;
+    }
+
+    .cookie-button {
+      width: min(63vw, 330px);
+      aspect-ratio: 1;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      background:
+        radial-gradient(circle at 36% 28%, #f9dc90 0 9%, transparent 10%),
+        radial-gradient(circle at 62% 31%, #7a4427 0 5%, transparent 6%),
+        radial-gradient(circle at 39% 55%, #7a4427 0 6%, transparent 7%),
+        radial-gradient(circle at 68% 64%, #7a4427 0 5%, transparent 6%),
+        radial-gradient(circle at 50% 50%, #c97d3a 0 56%, #9a552a 57% 70%, #77401f 71%);
+      box-shadow:
+        inset -24px -28px 0 rgba(82, 41, 19, .16),
+        inset 18px 20px 0 rgba(255, 232, 164, .22),
+        0 24px 45px rgba(115, 62, 30, .28);
+      transform: scale(1);
+      transition: transform .08s ease, filter .08s ease;
+      position: relative;
+    }
+
+    .cookie-button::before,
+    .cookie-button::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      background: #754022;
+      box-shadow: 70px 22px 0 #754022, 35px 118px 0 #754022, 142px 120px 0 #754022;
+    }
+
+    .cookie-button::before {
+      width: 18px;
+      height: 18px;
+      left: 80px;
+      top: 76px;
+    }
+
+    .cookie-button::after {
+      width: 13px;
+      height: 13px;
+      left: 120px;
+      top: 168px;
+      opacity: .9;
+    }
+
+    .cookie-button:active {
+      transform: scale(.96);
+      filter: brightness(1.04);
+    }
+
+    .floating {
+      position: absolute;
+      pointer-events: none;
+      color: var(--accent-dark);
+      font-weight: 900;
+      font-size: 1.25rem;
+      animation: rise 900ms ease-out forwards;
+      text-shadow: 0 1px 0 white;
+    }
+
+    @keyframes rise {
+      from {
+        opacity: 1;
+        transform: translate(-50%, -15px) scale(.95);
+      }
+      to {
+        opacity: 0;
+        transform: translate(-50%, -95px) scale(1.18);
+      }
+    }
+
+    .bakery-belt {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(46px, 1fr));
+      gap: 10px;
+    }
+
+    .worker {
+      min-height: 66px;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      display: grid;
+      place-items: center;
+      background: #fffaf0;
+      color: var(--muted);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .worker.active {
+      color: var(--ink);
+      border-color: rgba(78, 155, 118, .45);
+      background: linear-gradient(180deg, #ffffff, #edf8f2);
+    }
+
+    .worker svg {
+      width: 35px;
+      height: 35px;
+    }
+
+    .worker b {
+      position: absolute;
+      right: 7px;
+      bottom: 5px;
+      font-size: .78rem;
+      color: var(--mint);
+    }
+
+    .side {
+      display: grid;
+      gap: 16px;
+    }
+
+    .panel-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 16px 16px 0;
+    }
+
+    .panel-head h2 {
+      margin: 0;
+      font-size: 1rem;
+    }
+
+    .shop-list,
+    .achievement-list {
+      display: grid;
+      gap: 10px;
+      padding: 14px 16px 16px;
+    }
+
+    .buy-card {
+      display: grid;
+      grid-template-columns: 48px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf8;
+      padding: 12px;
+      text-align: left;
+      cursor: pointer;
+      transition: transform .15s ease, border-color .15s ease, background .15s ease, opacity .15s ease;
+    }
+
+    .buy-card:hover {
+      transform: translateY(-1px);
+      border-color: #c2b19b;
+      background: #ffffff;
+    }
+
+    .buy-card:disabled {
+      cursor: not-allowed;
+      opacity: .55;
+      transform: none;
+    }
+
+    .buy-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      background: #f0f5ff;
+      color: var(--blue);
+    }
+
+    .buy-card:nth-child(2n) .buy-icon {
+      background: #eef8f2;
+      color: var(--mint);
+    }
+
+    .buy-card:nth-child(3n) .buy-icon {
+      background: #fff5da;
+      color: #b77a13;
+    }
+
+    .buy-main {
+      min-width: 0;
+    }
+
+    .buy-title {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 2px;
+    }
+
+    .buy-title strong {
+      font-size: .98rem;
+    }
+
+    .buy-title span {
+      color: var(--muted);
+      font-size: .8rem;
+    }
+
+    .buy-main p {
+      margin: 0;
+      color: var(--muted);
+      font-size: .82rem;
+      line-height: 1.35;
+    }
+
+    .price {
+      color: var(--accent-dark);
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .stats {
+      padding: 16px;
+    }
+
+    .stats h2 {
+      margin: 0 0 12px;
+      font-size: 1rem;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 9px;
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px;
+      background: #fffdf8;
+    }
+
+    .stat span {
+      color: var(--muted);
+      display: block;
+      font-size: .78rem;
+      margin-bottom: 3px;
+    }
+
+    .stat strong {
+      font-size: .98rem;
+    }
+
+    .achievement {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 10px 12px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: #fffdf8;
+      opacity: .5;
+    }
+
+    .achievement.unlocked {
+      opacity: 1;
+      border-color: rgba(227, 169, 47, .65);
+      background: #fff9e9;
+    }
+
+    .badge {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      color: white;
+      background: #a7a19a;
+      flex: 0 0 auto;
+    }
+
+    .achievement.unlocked .badge {
+      background: var(--gold);
+    }
+
+    .achievement strong {
+      display: block;
+      font-size: .88rem;
+    }
+
+    .achievement span {
+      display: block;
+      color: var(--muted);
+      font-size: .78rem;
+      line-height: 1.3;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 22px;
+      transform: translateX(-50%) translateY(20px);
+      opacity: 0;
+      pointer-events: none;
+      background: #211a16;
+      color: white;
+      border-radius: 8px;
+      padding: 11px 14px;
+      box-shadow: var(--shadow);
+      transition: opacity .2s ease, transform .2s ease;
+      z-index: 10;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 860px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .stage {
+        min-height: auto;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .app {
+        width: min(100% - 20px, 1180px);
+        padding: 16px 0;
+      }
+
+      header {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .top-actions {
+        width: 100%;
+        justify-content: stretch;
+      }
+
+      .small-button {
+        flex: 1;
+      }
+
+      .score-row,
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cookie-button {
+        width: min(78vw, 280px);
+      }
+
+      .cookie-button::before {
+        left: 60px;
+        top: 58px;
+      }
+
+      .cookie-button::after {
+        left: 98px;
+        top: 138px;
+      }
+
+      .buy-card {
+        grid-template-columns: 42px minmax(0, 1fr);
+      }
+
+      .buy-icon {
+        width: 42px;
+        height: 42px;
+      }
+
+      .price {
+        grid-column: 2;
+        justify-self: start;
+      }
+      #saveBtn{
+      background-color:white;
+      border-radius: 8px;
+    text-decoration: none;
+    text-align: center;
+  }
+    }
+  </style>
+<script type="text/javascript" nonce="9d0fe746926c4dccaa70352b252" src="//local.adguard.org?ts=1781508162263&amp;type=content-script&amp;dmn=cdn.discordapp.com&amp;url=https%3A%2F%2Fcdn.discordapp.com%2Fattachments%2F1429504792518070425%2F1514145245036548136%2Findex.html%3Fex%3D6a30e4a5%26is%3D6a2f9325%26hm%3Dcf3784e8b8d5971b82c98cf6f0eaed7def89083dc5490d231f7d6dfbf77ad9ef%26&amp;app=chrome.exe&amp;css=3&amp;js=1&amp;rel=1&amp;rji=1&amp;sbe=0"></script><script type="text/javascript" nonce="9d0fe746926c4dccaa70352b252" src="//local.adguard.org?ts=1781508162263&amp;name=AdGuard%20Extra&amp;name=AdGuard%20Popup%20Blocker&amp;type=user-script"></script></head>
+<body>
+  <main class="app">
+    <header>
+      <div class="brand">
+        <div class="mark" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="27" height="27" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-4-4 4 4 0 0 1-6-6"></path>
+            <path d="M8.5 8.5h.01"></path>
+            <path d="M16 15.5h.01"></path>
+            <path d="M12 12h.01"></path>
+          </svg>
+        </div>
+        <div>
+          <h1>Cookie Atelier</h1>
+          <p>焼いて、増やして、工房を大きくするクリックゲーム</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <a href="homepage.html" id="saveBtn">ホームページ</a>
+        <button class="small-button" id="resetBtn" type="button">リセット</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <section class="stage" aria-label="クッキー作り">
+        <div class="score-row">
+          <div class="metric">
+            <span>クッキー</span>
+            <strong id="cookieCount">0</strong>
+          </div>
+          <div class="metric">
+            <span>1クリック</span>
+            <strong id="perClick">1</strong>
+          </div>
+          <div class="metric">
+            <span>毎秒</span>
+            <strong id="perSecond">0</strong>
+          </div>
+        </div>
+
+        <div class="cookie-zone" id="cookieZone">
+          <button class="cookie-button" id="cookieButton" type="button" aria-label="クッキーを焼く"></button>
+        </div>
+
+        <div class="bakery-belt" id="bakeryBelt" aria-label="工房スタッフ"></div>
+      </section>
+
+      <aside class="side">
+        <section class="shop" aria-label="ショップ">
+          <div class="panel-head">
+            <h2>ショップ</h2>
+            <span id="shopHint">買えるものからどうぞ</span>
+          </div>
+          <div class="shop-list" id="shopList"></div>
+        </section>
+
+        <section class="stats" aria-label="記録">
+          <h2>記録</h2>
+          <div class="stat-grid">
+            <div class="stat">
+              <span>合計生産</span>
+              <strong id="totalBaked">0</strong>
+            </div>
+            <div class="stat">
+              <span>クリック数</span>
+              <strong id="clicks">0</strong>
+            </div>
+            <div class="stat">
+              <span>所持施設</span>
+              <strong id="ownedBuildings">0</strong>
+            </div>
+            <div class="stat">
+              <span>実績</span>
+              <strong id="achievementCount">0 / 6</strong>
+            </div>
+          </div>
+        </section>
+
+        <section class="achievements" aria-label="実績">
+          <div class="panel-head">
+            <h2>実績</h2>
+          </div>
+          <div class="achievement-list" id="achievementList"></div>
+        </section>
+      </aside>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const SAVE_KEY = "cookie-atelier-save-v2";
+
+    const upgrades = [
+      {
+        id: "cursor",
+        name: "泡立て器",
+        description: "クリックの力を少し強くします",
+        baseCost: 15,
+        cps: 0,
+        click: 1,
+        icon: "hand"
+      },
+      {
+        id: "grandma",
+        name: "名人パティシエ",
+        description: "毎秒クッキーを焼いてくれます",
+        baseCost: 75,
+        cps: 1,
+        click: 0,
+        icon: "chef"
+      },
+      {
+        id: "oven",
+        name: "二段オーブン",
+        description: "安定した焼き上がりで生産量アップ",
+        baseCost: 240,
+        cps: 4,
+        click: 0,
+        icon: "oven"
+      },
+      {
+        id: "factory",
+        name: "焼き菓子ライン",
+        description: "工房の主力になる自動生産設備",
+        baseCost: 1100,
+        cps: 18,
+        click: 0,
+        icon: "factory"
+      },
+      {
+        id: "recipe",
+        name: "秘密のレシピ",
+        description: "クリックも自動生産もぐっと伸ばします",
+        baseCost: 4200,
+        cps: 55,
+        click: 7,
+        icon: "book"
+      }
+    ];
+
+    const achievements = [
+      { id: "first", title: "最初の一枚", text: "クッキーを1枚焼く", test: s => s.total >= 1 },
+      { id: "hundred", title: "香ばしい朝", text: "合計100枚焼く", test: s => s.total >= 100 },
+      { id: "thousand", title: "工房らしくなった", text: "合計1,000枚焼く", test: s => s.total >= 1000 },
+      { id: "clicker", title: "手仕事の達人", text: "100回クリックする", test: s => s.clicks >= 100 },
+      { id: "crew", title: "小さなチーム", text: "施設を10個持つ", test: s => ownedTotal(s) >= 10 },
+      { id: "machine", title: "焼きの流れ", text: "毎秒100枚に到達する", test: s => getCps(s) >= 100 }
+    ];
+
+    const defaultState = {
+      cookies: 0,
+      total: 0,
+      clicks: 0,
+      owned: {},
+      unlocked: {},
+      lastSaved: Date.now()
+    };
+
+    let state = loadState();
+    let lastTick = performance.now();
+    let saveTimer;
+
+    const els = {
+      cookieCount: document.querySelector("#cookieCount"),
+      perClick: document.querySelector("#perClick"),
+      perSecond: document.querySelector("#perSecond"),
+      totalBaked: document.querySelector("#totalBaked"),
+      clicks: document.querySelector("#clicks"),
+      ownedBuildings: document.querySelector("#ownedBuildings"),
+      achievementCount: document.querySelector("#achievementCount"),
+      shopList: document.querySelector("#shopList"),
+      achievementList: document.querySelector("#achievementList"),
+      bakeryBelt: document.querySelector("#bakeryBelt"),
+      cookieButton: document.querySelector("#cookieButton"),
+      cookieZone: document.querySelector("#cookieZone"),
+      toast: document.querySelector("#toast"),
+      saveBtn: document.querySelector("#saveBtn"),
+      resetBtn: document.querySelector("#resetBtn")
+    };
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(SAVE_KEY);
+        if (!raw) return structuredClone(defaultState);
+        const parsed = JSON.parse(raw);
+        return {
+          ...structuredClone(defaultState),
+          ...parsed,
+          owned: parsed.owned || {},
+          unlocked: parsed.unlocked || {}
+        };
+      } catch {
+        return structuredClone(defaultState);
+      }
+    }
+
+    function saveState(silent = false) {
+      state.lastSaved = Date.now();
+      localStorage.setItem(SAVE_KEY, JSON.stringify(state));
+      if (!silent) showToast("保存しました");
+    }
+
+    function format(value) {
+      if (value < 1000) return Math.floor(value).toLocaleString("ja-JP");
+      if (value < 1000000) return Math.floor(value).toLocaleString("ja-JP");
+      const units = ["", "万", "億", "兆", "京"];
+      let n = value;
+      let unit = 0;
+      while (n >= 10000 && unit < units.length - 1) {
+        n /= 10000;
+        unit += 1;
+      }
+      return `${n.toFixed(n >= 100 ? 0 : n >= 10 ? 1 : 2)}${units[unit]}`;
+    }
+
+    function ownedTotal(s = state) {
+      return Object.values(s.owned).reduce((sum, count) => sum + count, 0);
+    }
+
+    function upgradeCost(upgrade, s = state) {
+      const count = s.owned[upgrade.id] || 0;
+      return Math.floor(upgrade.baseCost * Math.pow(1.16, count));
+    }
+
+    function getClickPower(s = state) {
+      return upgrades.reduce((sum, item) => sum + (s.owned[item.id] || 0) * item.click, 1);
+    }
+
+    function getCps(s = state) {
+      return upgrades.reduce((sum, item) => sum + (s.owned[item.id] || 0) * item.cps, 0);
+    }
+
+    function icon(name) {
+      const paths = {
+        hand: '<path d="M8 11V5a2 2 0 1 1 4 0v5"></path><path d="M12 10V4a2 2 0 1 1 4 0v8"></path><path d="M16 12V7a2 2 0 1 1 4 0v8a7 7 0 0 1-14 0v-3a2 2 0 1 1 4 0v1"></path>',
+        chef: '<path d="M6 13.8A4 4 0 0 1 8 6a4 4 0 0 1 8 0 4 4 0 0 1 2 7.8"></path><path d="M7 14h10v7H7z"></path><path d="M10 18h4"></path>',
+        oven: '<rect x="4" y="5" width="16" height="15" rx="2"></rect><path d="M4 10h16"></path><path d="M8 8h.01"></path><path d="M12 8h.01"></path><path d="M8 14h8v3H8z"></path>',
+        factory: '<path d="M3 21V9l5 3V9l5 3V7h8v14z"></path><path d="M13 17h2"></path><path d="M18 17h1"></path><path d="M7 17h2"></path>',
+        book: '<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path><path d="M8 7h8"></path><path d="M8 11h6"></path>',
+        trophy: '<path d="M8 21h8"></path><path d="M12 17v4"></path><path d="M7 4h10v5a5 5 0 0 1-10 0z"></path><path d="M5 5H3v2a4 4 0 0 0 4 4"></path><path d="M19 5h2v2a4 4 0 0 1-4 4"></path>'
+      };
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${paths[name]}</svg>`;
+    }
+
+    function renderShop() {
+      els.shopList.innerHTML = "";
+      upgrades.forEach(upgrade => {
+        const cost = upgradeCost(upgrade);
+        const owned = state.owned[upgrade.id] || 0;
+        const button = document.createElement("button");
+        button.className = "buy-card";
+        button.type = "button";
+        button.disabled = state.cookies < cost;
+        button.innerHTML = `
+          <span class="buy-icon">${icon(upgrade.icon)}</span>
+          <span class="buy-main">
+            <span class="buy-title"><strong>${upgrade.name}</strong><span>x${owned}</span></span>
+            <p>${upgrade.description}</p>
+          </span>
+          <span class="price">${format(cost)}</span>
+        `;
+        button.addEventListener("click", () => buyUpgrade(upgrade));
+        els.shopList.appendChild(button);
+      });
+    }
+
+    function renderAchievements() {
+      els.achievementList.innerHTML = "";
+      achievements.forEach(item => {
+        const unlocked = Boolean(state.unlocked[item.id]);
+        const row = document.createElement("div");
+        row.className = `achievement${unlocked ? " unlocked" : ""}`;
+        row.innerHTML = `
+          <span class="badge">${icon("trophy")}</span>
+          <span><strong>${item.title}</strong><span>${item.text}</span></span>
+        `;
+        els.achievementList.appendChild(row);
+      });
+    }
+
+    function renderWorkers() {
+      els.bakeryBelt.innerHTML = "";
+      upgrades.forEach(upgrade => {
+        const owned = state.owned[upgrade.id] || 0;
+        const slot = document.createElement("div");
+        slot.className = `worker${owned ? " active" : ""}`;
+        slot.innerHTML = `${icon(upgrade.icon)}<b>${owned}</b>`;
+        els.bakeryBelt.appendChild(slot);
+      });
+    }
+
+    function render() {
+      els.cookieCount.textContent = format(state.cookies);
+      els.perClick.textContent = format(getClickPower());
+      els.perSecond.textContent = format(getCps());
+      els.totalBaked.textContent = format(state.total);
+      els.clicks.textContent = format(state.clicks);
+      els.ownedBuildings.textContent = format(ownedTotal());
+      const unlockedCount = Object.keys(state.unlocked).length;
+      els.achievementCount.textContent = `${unlockedCount} / ${achievements.length}`;
+      renderShop();
+      renderAchievements();
+      renderWorkers();
+    }
+
+    function buyUpgrade(upgrade) {
+      const cost = upgradeCost(upgrade);
+      if (state.cookies < cost) return;
+      state.cookies -= cost;
+      state.owned[upgrade.id] = (state.owned[upgrade.id] || 0) + 1;
+      showToast(`${upgrade.name}を購入しました`);
+      checkAchievements();
+      render();
+      queueSave();
+    }
+
+    function bake(amount) {
+      state.cookies += amount;
+      state.total += amount;
+    }
+
+    function clickCookie(event) {
+      const gain = getClickPower();
+      bake(gain);
+      state.clicks += 1;
+      popNumber(event.clientX, event.clientY, `+${format(gain)}`);
+      checkAchievements();
+      render();
+      queueSave();
+    }
+
+    function popNumber(x, y, text) {
+      const floating = document.createElement("div");
+      const bounds = els.cookieZone.getBoundingClientRect();
+      floating.className = "floating";
+      floating.textContent = text;
+      floating.style.left = `${x - bounds.left}px`;
+      floating.style.top = `${y - bounds.top}px`;
+      els.cookieZone.appendChild(floating);
+      floating.addEventListener("animationend", () => floating.remove());
+    }
+
+    function checkAchievements() {
+      achievements.forEach(item => {
+        if (!state.unlocked[item.id] && item.test(state)) {
+          state.unlocked[item.id] = true;
+          showToast(`実績解除: ${item.title}`);
+        }
+      });
+    }
+
+    function showToast(message) {
+      els.toast.textContent = message;
+      els.toast.classList.add("show");
+      window.clearTimeout(els.toast.hideTimer);
+      els.toast.hideTimer = window.setTimeout(() => els.toast.classList.remove("show"), 1800);
+    }
+
+    function queueSave() {
+      window.clearTimeout(saveTimer);
+      saveTimer = window.setTimeout(() => saveState(true), 500);
+    }
+
+    function gameLoop(now) {
+      const seconds = Math.min((now - lastTick) / 1000, 1);
+      lastTick = now;
+      const cps = getCps();
+      if (cps > 0) {
+        bake(cps * seconds);
+        checkAchievements();
+        render();
+      }
+      requestAnimationFrame(gameLoop);
+    }
+
+    els.cookieButton.addEventListener("click", clickCookie);
+    els.saveBtn.addEventListener("click", () => saveState(false));
+    els.resetBtn.addEventListener("click", () => {
+      if (!confirm("セーブデータをリセットしますか？")) return;
+      state = structuredClone(defaultState);
+      localStorage.removeItem(SAVE_KEY);
+      showToast("リセットしました");
+      render();
+    });
+
+    render();
+    requestAnimationFrame(gameLoop);
+    window.addEventListener("beforeunload", () => saveState(true));
+  </script>
+</body>
+</html>
