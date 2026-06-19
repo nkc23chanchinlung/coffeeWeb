@@ -23,3 +23,7 @@ val+=1;
 document.getElementById("abc").value=val;
  
 }
+function openwindow(){
+    window.open("game.html");
+}
+

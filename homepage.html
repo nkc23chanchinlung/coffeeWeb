@@ -2,26 +2,32 @@
 <html lang="en">
 <head>
     <link rel="stylesheet" href="css/style.css">
-    
+     <script src="javascript/script.js"></script>
     <title>TastyCoffee - Homepage</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 </html>
 <body>
-<h1>ホームページ</h1>
-<p>ここはコーヒーショップのホームページです。最新の情報やイベント、メニューの更新などをお知らせします。</p>
+    <div  class="top-container">
+        <a onclick="openMenu()" class="menu-button">
+        <img src="image/menu.png" alt="メニューボタン" width="50" height="50">
+        </a>
+<h1><strong>ホームページ</strong></h1>
+</div>
+
+<p id="about">ここは(仮)コーヒーショップのホームページです。最新の情報やイベント、メニューの更新などをお知らせします。</p>
 <div class="container">
 <section class="menu">
-    <center><h1>メニュー</h1></center><hr>
+    <center><h1><strong>メニュー</strong></h1></center><hr>
     <ul>
         <div class="menu-item">
         <li><a href="www.google.com">カフェ一覧</a></li><br>
         <li><a href="Shop.html">ショップ</a></li><br>
         <li><a href="www.google.com">アカウント</a></li><br>
-        <li><a href="game.html">ゲーム</a></li><br>
-        <li><a href="www.google.com">アクセス</a></li><br>
-        <li><a href="index.html">タイトル</a></li> 
+        <li><a onclick="openwindow()">ゲーム</a></li><br>
+        <li><a href="#map">アクセス</a></li><br>
+        <li><a href="#toiawase">お問い合わせ</a></li> 
         </div>
        
 </section>
@@ -40,7 +46,7 @@
     </tr>
 </table>
 </div>
- <a href="#" class="topbutton">トップへ</a>
+ 
 
  <section class="new-item">
     <h2 >新商品登場</h2>
@@ -71,6 +77,44 @@
 </tr>
 </table>
 </section>
+<h2>紹介動画</h2>
+<table>
+    <tr>
+        <th>
+
+<iframe width="1188" height="668" src="https://www.youtube.com/embed/IAm9bIy1mQw" title="【プロ直伝】おいしいドリップコーヒーのいれ方" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+
+</th>
+</tr>
+</table>
+<h2>アクセス</h2>
+<div class="access">
+<iframe id="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d105740.78680086091!2d139.3900541787964!3d34.08490257681614!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x60165cc8de98d38d%3A0x4ece4573d8661658!2z5p2x5Lqs6YO95LiJ5a6F5p2R!5e0!3m2!1sja!2sjp!4v1781659512574!5m2!1sja!2sjp" width="1280" height="720" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+<p>バスで10分で到着できる場所</p>
+</div>
+ <h2>お問い合わせ</h2>
+<div class="contact">
+   
+    <p>ご質問やご意見がございましたら、以下のフォームからお問い合わせください。</p>
+    <form action="submit_form.php" method="post">
+        <label for="name">お名前:</label><br>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="email">メールアドレス:</label><br>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <label id="toiawase" for="message">メッセージ:</label><br>
+        <textarea id="message" name="message" rows="4" required></textarea><br><br>
+        
+        <input id="submit-button" type="submit" value="送信">
+    </form>
+    <section class="footer">
+    <p>© 2026 TastyCoffee. All rights reserved.</p>
+</section>
+</div>
+
+<a href="#" class="topbutton">トップへ</a>
 
 <script>
 

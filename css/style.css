@@ -2,10 +2,10 @@ body{
     -webkit-text-stroke-width: 2px;
     
     -webkit-text-stroke-color: rgb(255, 255, 255);
-    color: #ffffff00;
+    color: #4f2a06;
    
     text-align: center;
-    text-shadow: 2px 2px 4px #4f2a06;
+    text-shadow: 2px 2px 4px #906427;
     background-color: #ffd3a3;
 
     animation: fadeIn 1.5s ease-out;
@@ -25,17 +25,38 @@ html {
       }
 }
 h1{
-color:black;
+color:#4f2a06;
  -webkit-text-stroke-width: 1px;
     
-    -webkit-text-stroke-color: rgb(158, 143, 57);
+    -webkit-text-stroke-color: #ffffff;
 }
 h2{
 background-color: #4f2a06;
 outline: 5px solid #ffffff;
+font-size: 2em;
 border-radius: 5px;
 padding: auto;
 
+}
+.top-container{
+    display: inline-flex;
+background-color: #906427;
+       outline: 5px solid #4f2a06;
+    padding: 20px 100px;
+    border-radius: 40px;
+    width: 90%; 
+}
+.top-container h1{
+    
+    font-size: 3em;
+    margin-left: 20px;
+    
+}
+#about{
+     -webkit-text-stroke-width:0px;
+     font-size: 200%;
+     border-bottom:5px solid #392201;
+color:black;
 }
 .menu{
     margin-left: 0;
@@ -43,10 +64,11 @@ padding: auto;
     text-align:left;    
     font-weight:bold;
     white-space: nowrap;
+   
     
 }
 .menu h1{
-    font-size: 1.5em;
+    font-size: 2em;
     font-weight: auto;
     
     
@@ -59,12 +81,13 @@ padding: auto;
     padding: 10px;
     margin-bottom: 10px;
    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    cursor: pointer;
     
 }
 .menu-item a{
     color: white;
     text-decoration: none;
-    font-size: 20px;
+    font-size: clamp(20px, 1.5vw, 3em);
     font-weight: bold;
 }
 .menu-item a:hover{
@@ -155,7 +178,7 @@ animation: fadeIn 1.0s ease-out;
    
     /* margin: 0 auto; */
      margin-inline: auto;
-        margin-top: 120px;
+        margin-top: 5%;
     border-collapse: collapse;
    font-size: 20px;
    background-color: #906427;
@@ -163,8 +186,8 @@ animation: fadeIn 1.0s ease-out;
 
     border-radius: 10px;
     overflow-y: auto;
-    height: 200px;
-    width: 1000px;
+    height: 200%;
+    width: 1000%;
     -webkit-overflow-scrolling: touch;
 }
 .event-table th, td {
@@ -172,12 +195,13 @@ animation: fadeIn 1.0s ease-out;
   padding: 20px;
   border: 2px solid #4f2a06;
   color: #000;
-  font-size: 14px;
+  font-size: 1.5em;
   text-align: center;
   white-space: nowrap;
+  height: 50%;
 }
 .event-table h4{
-    font-size: 20px;
+    font-size: 2em;
     font-weight: bold;
     color: #4f2a06;
 }
@@ -259,6 +283,52 @@ width: 5%;
 table{
 width: 100%; /* または特定のpx値 */
   table-layout: auto; /* 文字数に応じて自動調整 */}
+
+.access{
+    display:flex;
+}
+#abc{
+color:black;
+}
+.footer{
+    background-color: #906427;
+    color: white;
+    text-align: center;
+    
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+.contact {
+   background-color: #906427;
+   outline: 5px solid #4f2a06;
+    color: white;
+    
+    border-radius: 10px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.contact #message {
+    width: 50%;
+    height: 100%;
+    padding: 10px 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.contact #submit-button{
+background-color: #4f2a06;
+outline: 5px solid #ffffff;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.contact #submit-button:hover{
+    background-color: #ff7f50;
+}
 
 
 
