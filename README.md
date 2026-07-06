@@ -5,6 +5,6 @@ Web制作勉強するため
 ## 課題
 1.スマホや画面縮小などの対応<br>
 2.AWSでサイト公開
-
-
+## リンク
+http://tastycoffeeshop.me/
 
